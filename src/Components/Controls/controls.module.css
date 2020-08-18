@@ -1,0 +1,18 @@
+.controls {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.btnBackground {
+  min-width: 26px;
+  width: 26px;
+  height: 26px;
+  padding: 3px;
+}
+
+.selectControl {
+  margin: 0 10px;
+}
