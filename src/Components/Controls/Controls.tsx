@@ -11,6 +11,9 @@ import {
   withStyles,
   createStyles,
 } from '@material-ui/core';
+import type { State } from 'src/Reducers/reducers';
+import { changelang, changeTemp } from 'src/Reducers/actions';
+import { connect } from 'react-redux';
 import style from './controls.module.css';
 
 const useStyles = () =>
@@ -24,11 +27,24 @@ type Props = Readonly<{
   classes: {
     select: string;
   };
+  changelanguage: typeof changelang;
+  changeTemperature: typeof changeTemp;
+  lang: string;
+  temp: string;
 }>;
 
 class Controls extends React.PureComponent<Props> {
   render(): JSX.Element {
-    const { classes } = this.props;
+    const {
+      classes,
+      changelanguage,
+      changeTemperature,
+      lang,
+      temp,
+    } = this.props;
+
+    console.log(this.props);
+
     return (
       <div className={style.controls}>
         <Button
@@ -43,10 +59,11 @@ class Controls extends React.PureComponent<Props> {
         <FormControl variant="outlined" className={style.selectControl}>
           <Select
             labelId="Language"
-            value="pl"
+            value={lang}
             classes={{
               outlined: classes.select,
             }}
+            onChange={(event) => changelanguage(String(event.target.value))}
           >
             <MenuItem value="en">EN</MenuItem>
             <MenuItem value="ru">RU</MenuItem>
@@ -54,7 +71,13 @@ class Controls extends React.PureComponent<Props> {
           </Select>
         </FormControl>
 
-        <RadioGroup row aria-label="temp" name="temp" defaultValue="celsius">
+        <RadioGroup
+          row
+          aria-label="temp"
+          name="temp"
+          value={temp}
+          onChange={(event) => changeTemperature(String(event.target.value))}
+        >
           <FormControlLabel
             value="celsius"
             control={<Radio color="primary" />}
@@ -73,4 +96,17 @@ class Controls extends React.PureComponent<Props> {
   }
 }
 
-export default withStyles(useStyles)(Controls);
+const mapStateToProps = (state: State) => ({
+  lang: state.lang,
+  temp: state.temp,
+});
+
+const mapDispatchToProps = {
+  changelanguage: changelang,
+  changeTemperature: changeTemp,
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(useStyles)(Controls));
