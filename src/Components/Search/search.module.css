@@ -1,0 +1,10 @@
+.search {
+  grid-area: search;
+
+  display: flex;
+}
+
+.btnSearch {
+  height: 56px;
+  padding: 4px 34px;
+}

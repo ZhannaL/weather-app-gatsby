@@ -1,13 +1,103 @@
 export type Action =
   | Readonly<{ type: 'CHANGE_LANG'; payload: string }>
-  | Readonly<{ type: 'CHANGE_TEMP'; payload: string }>;
+  | Readonly<{ type: 'CHANGE_TEMP_TYPE'; payload: string }>
+  | Readonly<{
+      type: 'UPDATE_LOCATION';
+      payload: {
+        country: string;
+        city: string;
+        state: string;
+        lat: string;
+        lng: string;
+        latMap: number;
+        lngMap: number;
+        timeZone: string;
+        countryCode: string;
+      };
+    }>
+  | Readonly<{
+      type: 'UPDATE_WEATHER';
+      payload: {
+        weatherToday: {
+          temp: number;
+          appTemp: number;
+          wind: number;
+          humidity: number;
+          weatherCode: number;
+        };
+        weatherDays: {
+          day1: number;
+          day1WeatherCode: number;
+          day2: number;
+          day2WeatherCode: number;
+          day3: number;
+          day3WeatherCode: number;
+        };
+      };
+    }>;
+
+export type ThunkAction = (
+  dispatch: (action: Action) => unknown,
+  getState: () => State
+) => void;
 
 const defaultState = {
   lang: 'en',
-  temp: 'celsius',
+  tempType: 'celsius',
+  country: '',
+  city: '',
+  state: '',
+  lat: '',
+  lng: '',
+  latMap: 0,
+  lngMap: 0,
+  timeZone: '',
+  countryCode: '',
+  weatherToday: {
+    temp: 0,
+    appTemp: 0,
+    wind: 0,
+    humidity: 0,
+    weatherCode: 0,
+  },
+  weatherDays: {
+    day1: 0,
+    day1WeatherCode: 0,
+    day2: 0,
+    day2WeatherCode: 0,
+    day3: 0,
+    day3WeatherCode: 0,
+  },
 };
 
-export type State = Readonly<{ lang: string; temp: string }>;
+export type State = Readonly<{
+  lang: string;
+  tempType: string;
+  country: string;
+  city: string;
+  state: string;
+  lat: string;
+  lng: string;
+  latMap: number;
+  lngMap: number;
+  timeZone: string;
+  countryCode: string;
+  weatherToday: {
+    temp: number;
+    appTemp: number;
+    wind: number;
+    humidity: number;
+    weatherCode: number;
+  };
+  weatherDays: {
+    day1: number;
+    day1WeatherCode: number;
+    day2: number;
+    day2WeatherCode: number;
+    day3: number;
+    day3WeatherCode: number;
+  };
+}>;
 
 function reducers(state: State = defaultState, action: Action): State {
   switch (action.type) {
@@ -18,10 +108,46 @@ function reducers(state: State = defaultState, action: Action): State {
       };
     }
 
-    case 'CHANGE_TEMP': {
+    case 'CHANGE_TEMP_TYPE': {
       return {
         ...state,
-        temp: action.payload,
+        tempType: action.payload,
+      };
+    }
+
+    case 'UPDATE_LOCATION': {
+      return {
+        ...state,
+        country: action.payload.country,
+        city: action.payload.city,
+        state: action.payload.state,
+        lat: action.payload.lat,
+        lng: action.payload.lng,
+        latMap: action.payload.latMap,
+        lngMap: action.payload.lngMap,
+        timeZone: action.payload.timeZone,
+        countryCode: action.payload.countryCode,
+      };
+    }
+
+    case 'UPDATE_WEATHER': {
+      return {
+        ...state,
+        weatherToday: {
+          temp: action.payload.weatherToday.temp,
+          appTemp: action.payload.weatherToday.appTemp,
+          wind: action.payload.weatherToday.wind,
+          humidity: action.payload.weatherToday.humidity,
+          weatherCode: action.payload.weatherToday.weatherCode,
+        },
+        weatherDays: {
+          day1: action.payload.weatherDays.day1,
+          day1WeatherCode: action.payload.weatherDays.day1WeatherCode,
+          day2: action.payload.weatherDays.day2,
+          day2WeatherCode: action.payload.weatherDays.day2WeatherCode,
+          day3: action.payload.weatherDays.day3,
+          day3WeatherCode: action.payload.weatherDays.day3WeatherCode,
+        },
       };
     }
 

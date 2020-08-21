@@ -1,0 +1,36 @@
+.weatherMain {
+  grid-area: todayWeather;
+
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  grid-template-areas:
+    'temp icon'
+    'temp info';
+  grid-template-columns: 2fr 1fr;
+  /* text-transform: uppercase; */
+}
+
+.tempNow {
+  grid-area: temp;
+  font-size: 120px;
+  font-weight: bold;
+}
+
+.icon {
+  grid-area: icon;
+
+  width: 215px;
+  height: 155px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.weatherInfoLines {
+  grid-area: info;
+}
+
+.weatherInfoLines > * {
+  font-weight: bold;
+}

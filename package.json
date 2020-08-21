@@ -8,6 +8,7 @@
     "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.9.1",
     "@types/classnames": "^2.2.10",
+    "@types/mapbox-gl": "^1.11.2",
     "@types/react-redux": "^7.1.9",
     "classnames": "^2.2.6",
     "gatsby": "^2.24.41",
@@ -19,12 +20,14 @@
     "gatsby-plugin-sharp": "^2.6.26",
     "gatsby-source-filesystem": "^2.3.24",
     "gatsby-transformer-sharp": "^2.5.12",
+    "mapbox-gl": "^1.12.0",
     "prop-types": "^15.7.2",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-helmet": "^6.1.0",
     "react-redux": "^7.2.1",
-    "redux": "^4.0.5"
+    "redux": "^4.0.5",
+    "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^3.9.1",

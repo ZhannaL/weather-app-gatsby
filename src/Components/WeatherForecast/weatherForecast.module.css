@@ -1,0 +1,22 @@
+.weatherForecast {
+  grid-area: forecast;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.icon {
+  width: 115px;
+  height: 105px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.day {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 33%;
+}

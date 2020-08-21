@@ -1,9 +1,9 @@
 .controls {
+  grid-area: controls;
+
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  width: 100%;
+  justify-content: flex-start;
 }
 
 .btnBackground {
