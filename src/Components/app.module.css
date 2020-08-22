@@ -1,15 +1,17 @@
 @import '~src/styles/spacing.css';
 @import '~src/styles/reset.css';
 
-.appWrapper {
-  padding: var(--space-m);
-
+.appBackground {
   position: relative;
-  background-image: url('../styles/images/land.jpg');
+  /* background-image: url('../styles/images/land.jpg'); */
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  height: 100%;
+  height: 100vh;
+}
+
+.appWrapper {
+  padding: var(--space-m);
 
   display: grid;
 

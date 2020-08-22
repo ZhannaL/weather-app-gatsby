@@ -20,3 +20,7 @@
   flex-wrap: wrap;
   width: 33%;
 }
+
+.weekDay {
+  width: 150px;
+}

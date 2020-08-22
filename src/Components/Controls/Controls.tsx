@@ -17,6 +17,8 @@ import {
   changelang,
   changeTempType,
   updateLocation,
+  loadingBackground,
+  updateURLBackground,
 } from 'src/Reducers/actions';
 import { connect } from 'react-redux';
 import style from './controls.module.css';
@@ -53,12 +55,20 @@ type Props = Readonly<{
   changelanguage: typeof changelang;
   changeTemperature: typeof changeTempType;
   updateCurrentLocation: typeof updateLocation;
+  loading: typeof loadingBackground;
+  updateURL: typeof updateURLBackground;
   lang: string;
   tempType: string;
   city: string;
+  isLoading: boolean;
 }>;
 
 class Controls extends React.PureComponent<Props> {
+  componentDidMount() {
+    const { updateURL, city } = this.props;
+    updateURL(city);
+  }
+
   render(): JSX.Element {
     const {
       classes,
@@ -68,6 +78,9 @@ class Controls extends React.PureComponent<Props> {
       lang,
       tempType,
       city,
+      loading,
+      isLoading,
+      updateURL,
     } = this.props;
 
     // console.log(this.props);
@@ -79,8 +92,12 @@ class Controls extends React.PureComponent<Props> {
           size="small"
           color="primary"
           className={style.btnBackground}
+          onClick={() => {
+            loading();
+            updateURL(city);
+          }}
         >
-          <AutorenewIcon />
+          <AutorenewIcon className={isLoading ? style.iconLoading : ''} />
         </Button>
 
         <FormControl variant="filled" className={style.selectControl}>
@@ -146,12 +163,15 @@ const mapStateToProps = (state: State) => ({
   lang: state.lang,
   tempType: state.tempType,
   city: state.city,
+  isLoading: state.loadingBackround,
 });
 
 const mapDispatchToProps = {
   changelanguage: changelang,
   changeTemperature: changeTempType,
   updateCurrentLocation: updateLocation,
+  loading: loadingBackground,
+  updateURL: updateURLBackground,
 };
 
 export default connect(

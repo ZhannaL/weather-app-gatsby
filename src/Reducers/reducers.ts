@@ -2,6 +2,12 @@ export type Action =
   | Readonly<{ type: 'CHANGE_LANG'; payload: string }>
   | Readonly<{ type: 'CHANGE_TEMP_TYPE'; payload: string }>
   | Readonly<{
+      type: 'WRONG_UPDATE_LOCATION';
+      payload: {
+        wrongSearch: boolean;
+      };
+    }>
+  | Readonly<{
       type: 'UPDATE_LOCATION';
       payload: {
         country: string;
@@ -13,6 +19,7 @@ export type Action =
         lngMap: number;
         timeZone: string;
         countryCode: string;
+        wrongSearch: boolean;
       };
     }>
   | Readonly<{
@@ -34,6 +41,11 @@ export type Action =
           day3WeatherCode: number;
         };
       };
+    }>
+  | Readonly<{ type: 'LOADING_BACKGROUND'; payload: boolean }>
+  | Readonly<{
+      type: 'UPDATE_URL_IMAGE';
+      payload: { url: string; loading: boolean };
     }>;
 
 export type ThunkAction = (
@@ -53,6 +65,9 @@ const defaultState = {
   lngMap: 0,
   timeZone: '',
   countryCode: '',
+  url: '',
+  loadingBackround: false,
+  wrongSearch: false,
   weatherToday: {
     temp: 0,
     appTemp: 0,
@@ -82,6 +97,9 @@ export type State = Readonly<{
   lngMap: number;
   timeZone: string;
   countryCode: string;
+  url: string;
+  loadingBackround: boolean;
+  wrongSearch: boolean;
   weatherToday: {
     temp: number;
     appTemp: number;
@@ -127,6 +145,14 @@ function reducers(state: State = defaultState, action: Action): State {
         lngMap: action.payload.lngMap,
         timeZone: action.payload.timeZone,
         countryCode: action.payload.countryCode,
+        wrongSearch: action.payload.wrongSearch,
+      };
+    }
+
+    case 'WRONG_UPDATE_LOCATION': {
+      return {
+        ...state,
+        wrongSearch: action.payload.wrongSearch,
       };
     }
 
@@ -148,6 +174,21 @@ function reducers(state: State = defaultState, action: Action): State {
           day3: action.payload.weatherDays.day3,
           day3WeatherCode: action.payload.weatherDays.day3WeatherCode,
         },
+      };
+    }
+
+    case 'LOADING_BACKGROUND': {
+      return {
+        ...state,
+        loadingBackround: action.payload,
+      };
+    }
+
+    case 'UPDATE_URL_IMAGE': {
+      return {
+        ...state,
+        url: action.payload.url,
+        loadingBackround: action.payload.loading,
       };
     }
 

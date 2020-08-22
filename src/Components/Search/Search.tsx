@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createRef } from 'react';
 import {
   InputAdornment,
   Button,
@@ -6,8 +6,10 @@ import {
   FilledInput,
   InputLabel,
   FormControl,
+  FormHelperText,
 } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
+import CloseIcon from '@material-ui/icons/Close';
 import MyLocationIcon from '@material-ui/icons/MyLocation';
 import { updateLocation } from 'src/Reducers/actions';
 import { connect } from 'react-redux';
@@ -17,10 +19,8 @@ import { Wrapper } from '../Wrapper';
 
 type Props = Readonly<{
   updateCurrentLocation: typeof updateLocation;
-  country: string;
-  city: string;
-  state: string;
   lang: string;
+  isWrong: boolean;
 }>;
 
 type CompState = {
@@ -28,35 +28,55 @@ type CompState = {
 };
 
 class Search extends React.PureComponent<Props, CompState> {
+  private myRef: React.RefObject<HTMLInputElement>;
+
   constructor(props: Props) {
     super(props);
     this.state = {
       currentSearch: '',
     };
+    this.myRef = createRef();
   }
 
   render(): JSX.Element {
     const { currentSearch } = this.state;
-    const { updateCurrentLocation, lang } = this.props;
-
+    const { updateCurrentLocation, lang, isWrong } = this.props;
+    console.log(isWrong);
     return (
       <Wrapper className={style.search}>
         <FormControl fullWidth variant="filled">
-          <InputLabel>Search city</InputLabel>
+          <InputLabel>
+            {isWrong ? 'Incorrect search' : 'Search city'}
+          </InputLabel>
           <FilledInput
+            inputRef={this.myRef}
             onChange={(event) =>
               this.setState({ currentSearch: event.target.value })
             }
+            error={isWrong}
             value={currentSearch}
             endAdornment={
-              <InputAdornment position="end">
-                <IconButton
-                  onClick={() => updateCurrentLocation(lang)}
-                  edge="end"
-                >
-                  <MyLocationIcon />
-                </IconButton>
-              </InputAdornment>
+              <>
+                <InputAdornment position="end">
+                  <IconButton
+                    onClick={() => {
+                      this.setState({ currentSearch: '' });
+                      this.myRef.current?.focus();
+                    }}
+                    edge="end"
+                  >
+                    <CloseIcon />
+                  </IconButton>
+                </InputAdornment>
+                <InputAdornment position="end">
+                  <IconButton
+                    onClick={() => updateCurrentLocation(lang)}
+                    edge="end"
+                  >
+                    <MyLocationIcon />
+                  </IconButton>
+                </InputAdornment>
+              </>
             }
             startAdornment={
               <InputAdornment position="start">
@@ -81,9 +101,7 @@ class Search extends React.PureComponent<Props, CompState> {
 }
 
 const mapStateToProps = (state: State) => ({
-  country: state.country,
-  city: state.city,
-  state: state.state,
+  isWrong: state.wrongSearch,
   lang: state.lang,
 });
 

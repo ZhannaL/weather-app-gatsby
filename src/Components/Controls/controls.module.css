@@ -16,3 +16,17 @@
 .selectControl {
   margin: 0 10px;
 }
+
+.iconLoading {
+  animation: rotateRefresh 0.5s linear infinite;
+}
+
+@keyframes rotateRefresh {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(359deg);
+  }
+}

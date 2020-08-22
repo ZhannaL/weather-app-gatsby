@@ -1,4 +1,8 @@
-import { getLocation, getWeather } from 'src/Translations/queries';
+import {
+  getLocation,
+  getWeather,
+  getLinkToImage,
+} from 'src/Translations/queries';
 import type { Action, ThunkAction } from './reducers';
 
 export const changelang = (lang: string): Action => {
@@ -25,21 +29,23 @@ export const updateLocation = (lang: string, city = ''): ThunkAction => {
             lngMap: data.results[0].geometry.lng,
             timeZone: data.results[0].annotations.timezone.name,
             countryCode: data.results[0].components.country_code,
+            wrongSearch: false,
           },
         });
+        getLinkToImage(data.results[0].components.city).then((urlLink) =>
+          dispatch({
+            type: 'UPDATE_URL_IMAGE',
+            payload: {
+              url: urlLink,
+              loading: false,
+            },
+          })
+        );
       } else {
         dispatch({
-          type: 'UPDATE_LOCATION',
+          type: 'WRONG_UPDATE_LOCATION',
           payload: {
-            country: 'false',
-            city: 'false',
-            state: 'false',
-            lat: 'false',
-            lng: 'false',
-            latMap: 0,
-            lngMap: 0,
-            timeZone: 'false',
-            countryCode: 'false',
+            wrongSearch: true,
           },
         });
       }
@@ -74,5 +80,23 @@ export const updateWeather = (): ThunkAction => {
         })
       )
       .catch((err) => console.log(err));
+  };
+};
+
+export const loadingBackground = (): Action => {
+  return { type: 'LOADING_BACKGROUND', payload: true };
+};
+
+export const updateURLBackground = (query: string): ThunkAction => {
+  return (dispatch) => {
+    getLinkToImage(query).then((urlLink) =>
+      dispatch({
+        type: 'UPDATE_URL_IMAGE',
+        payload: {
+          url: urlLink,
+          loading: false,
+        },
+      })
+    );
   };
 };

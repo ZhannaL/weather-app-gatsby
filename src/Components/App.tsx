@@ -1,6 +1,7 @@
 import React from 'react';
-import { StylesProvider, ThemeProvider, CssBaseline } from '@material-ui/core';
-import { theme } from 'src/styles/theme-MUI';
+import { connect } from 'react-redux';
+import { State } from 'src/Reducers/reducers';
+import image from 'src/styles/images/land.jpg';
 import style from './app.module.css';
 import { Controls } from './Controls';
 import { Search } from './Search';
@@ -10,11 +11,20 @@ import { MapBlock } from './Map';
 import { WeatherMain } from './WeatherMain';
 import { WeatherForecast } from './WeatherForecast';
 
-const App = (): JSX.Element => {
-  return (
-    <StylesProvider injectFirst>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
+type Props = Readonly<{
+  url: string;
+}>;
+
+class App extends React.PureComponent<Props> {
+  render(): JSX.Element {
+    const { url } = this.props;
+    return (
+      <div
+        style={{
+          backgroundImage: `url(${url || image})`,
+        }}
+        className={style.appBackground}
+      >
         <div className={style.appWrapper}>
           <Controls />
           <Search />
@@ -24,9 +34,13 @@ const App = (): JSX.Element => {
           <WeatherMain />
           <WeatherForecast />
         </div>
-      </ThemeProvider>
-    </StylesProvider>
-  );
-};
+      </div>
+    );
+  }
+}
 
-export default App;
+const mapStateToProps = (state: State) => ({
+  url: state.url,
+});
+
+export default connect(mapStateToProps, null)(App);
