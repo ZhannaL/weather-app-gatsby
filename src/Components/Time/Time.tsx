@@ -1,15 +1,21 @@
 import React from 'react';
 import { Typography } from '@material-ui/core';
-import { connect } from 'react-redux';
+import { connect, ConnectedProps } from 'react-redux';
 import { State } from 'src/Reducers/reducers';
 import { getLocal } from 'src/Translations/helpers';
 import style from './time.module.css';
 import { Wrapper } from '../Wrapper';
 
-type Props = Readonly<{
-  lang: string;
-  timeZone: string;
-}>;
+const mapStateToProps = (state: State) => ({
+  lang: state.lang,
+  timeZone: state.timeZone,
+});
+
+const connector = connect(mapStateToProps, null);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+type Props = PropsFromRedux;
 
 type CompState = {
   currentTime: Date;
@@ -48,11 +54,13 @@ class Time extends React.PureComponent<Props, CompState> {
     });
     const stringTimeDay = currentTime
       .toLocaleString(local, {
+        // @ts-ignore
         dateStyle: 'medium',
         ...(timeZone ? { timeZone } : null),
       })
       .split(' ');
     const time = currentTime.toLocaleString(local, {
+      // @ts-ignore
       timeStyle: 'short',
       ...(timeZone ? { timeZone } : null),
     });
@@ -67,9 +75,4 @@ class Time extends React.PureComponent<Props, CompState> {
   }
 }
 
-const mapStateToProps = (state: State) => ({
-  lang: state.lang,
-  timeZone: state.timeZone,
-});
-
-export default connect(mapStateToProps, null)(Time);
+export default connector(Time);

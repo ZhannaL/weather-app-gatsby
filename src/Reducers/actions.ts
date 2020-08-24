@@ -5,7 +5,7 @@ import {
 } from 'src/Translations/queries';
 import type { Action, ThunkAction } from './reducers';
 
-export const changelang = (lang: string): Action => {
+export const changelang = (lang: 'en' | 'ru' | 'pl'): Action => {
   return { type: 'CHANGE_LANG', payload: lang };
 };
 
@@ -13,7 +13,10 @@ export const changeTempType = (tempType: string): Action => {
   return { type: 'CHANGE_TEMP_TYPE', payload: tempType };
 };
 
-export const updateLocation = (lang: string, city = ''): ThunkAction => {
+export const updateLocation = (
+  lang: 'en' | 'ru' | 'pl',
+  city = ''
+): ThunkAction => {
   return (dispatch) => {
     getLocation(lang, city).then((data) => {
       if (data.results[0]) {
@@ -32,15 +35,6 @@ export const updateLocation = (lang: string, city = ''): ThunkAction => {
             wrongSearch: false,
           },
         });
-        // getLinkToImage(data.results[0].components.city).then((urlLink) =>
-        //   dispatch({
-        //     type: 'UPDATE_URL_IMAGE',
-        //     payload: {
-        //       url: urlLink,
-        //       loading: false,
-        //     },
-        //   })
-        // );
       } else {
         dispatch({
           type: 'WRONG_UPDATE_LOCATION',
@@ -54,7 +48,7 @@ export const updateLocation = (lang: string, city = ''): ThunkAction => {
 };
 
 export const getCityEngName = (city = ''): ThunkAction => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     getLocation('en', city).then((data) => {
       if (data.results[0]) {
         dispatch({
@@ -82,7 +76,6 @@ export const getCityEngName = (city = ''): ThunkAction => {
           },
         });
       }
-      console.log('getCityEngName', getState());
     });
   };
 };
@@ -91,32 +84,28 @@ export const updateWeather = (): ThunkAction => {
   return (dispatch, getState) => {
     const { engCity, countryCode, state, city } = getState();
     const queryWeather = city !== undefined ? engCity : state;
-    getWeather(queryWeather, countryCode)
-      .then((result) => {
-        console.log(result);
-        dispatch({
-          type: 'UPDATE_WEATHER',
-          payload: {
-            weatherToday: {
-              temp: result.data[0].temp,
-              appTemp: result.data[0].app_min_temp,
-              wind: result.data[0].wind_spd,
-              humidity: result.data[0].rh,
-              weatherCode: result.data[0].weather.code,
-            },
-            weatherDays: {
-              day1: result.data[1].max_temp,
-              day1WeatherCode: result.data[1].weather.code,
-              day2: result.data[2].max_temp,
-              day2WeatherCode: result.data[2].weather.code,
-              day3: result.data[3].max_temp,
-              day3WeatherCode: result.data[3].weather.code,
-            },
+    getWeather(queryWeather, countryCode).then((result) => {
+      dispatch({
+        type: 'UPDATE_WEATHER',
+        payload: {
+          weatherToday: {
+            temp: result.data[0].temp,
+            appTemp: result.data[0].app_min_temp,
+            wind: result.data[0].wind_spd,
+            humidity: result.data[0].rh,
+            weatherCode: result.data[0].weather.code,
           },
-        });
-        console.log('updateWeather', getState());
-      })
-      .catch((err) => console.log(err));
+          weatherDays: {
+            day1: result.data[1].max_temp,
+            day1WeatherCode: result.data[1].weather.code,
+            day2: result.data[2].max_temp,
+            day2WeatherCode: result.data[2].weather.code,
+            day3: result.data[3].max_temp,
+            day3WeatherCode: result.data[3].weather.code,
+          },
+        },
+      });
+    });
   };
 };
 

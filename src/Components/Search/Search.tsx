@@ -11,17 +11,26 @@ import SearchIcon from '@material-ui/icons/Search';
 import CloseIcon from '@material-ui/icons/Close';
 import MyLocationIcon from '@material-ui/icons/MyLocation';
 import { updateLocation, getCityEngName } from 'src/Reducers/actions';
-import { connect } from 'react-redux';
+import { connect, ConnectedProps } from 'react-redux';
 import { State } from 'src/Reducers/reducers';
 import style from './search.module.css';
 import { Wrapper } from '../Wrapper';
 
-type Props = Readonly<{
-  updateCurrentLocation: typeof updateLocation;
-  updateCityEngName: typeof getCityEngName;
-  lang: string;
-  isWrong: boolean;
-}>;
+const mapStateToProps = (state: State) => ({
+  isWrong: state.wrongSearch,
+  lang: state.lang,
+});
+
+const mapDispatchToProps = {
+  updateCurrentLocation: updateLocation,
+  updateCityEngName: getCityEngName,
+};
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+type Props = PropsFromRedux;
 
 type CompState = {
   currentSearch: string;
@@ -110,14 +119,4 @@ class Search extends React.PureComponent<Props, CompState> {
   }
 }
 
-const mapStateToProps = (state: State) => ({
-  isWrong: state.wrongSearch,
-  lang: state.lang,
-});
-
-const mapDispatchToProps = {
-  updateCurrentLocation: updateLocation,
-  updateCityEngName: getCityEngName,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Search);
+export default connector(Search);

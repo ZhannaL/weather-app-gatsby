@@ -3,18 +3,27 @@ import { Typography } from '@material-ui/core';
 
 import { State } from 'src/Reducers/reducers';
 import { updateLocation, getCityEngName } from 'src/Reducers/actions';
-import { connect } from 'react-redux';
+import { connect, ConnectedProps } from 'react-redux';
 import style from './location.module.css';
 import { Wrapper } from '../Wrapper';
 
-type Props = Readonly<{
-  updateCurrentLocation: typeof updateLocation;
-  updateCityEngName: typeof getCityEngName;
-  country: string;
-  city: string;
-  state: string;
-  lang: string;
-}>;
+const mapStateToProps = (state: State) => ({
+  country: state.country,
+  city: state.city,
+  state: state.state,
+  lang: state.lang,
+});
+
+const mapDispatchToProps = {
+  updateCurrentLocation: updateLocation,
+  updateCityEngName: getCityEngName,
+};
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+type Props = PropsFromRedux;
 
 class Location extends React.PureComponent<Props> {
   componentDidMount() {
@@ -39,16 +48,4 @@ class Location extends React.PureComponent<Props> {
   }
 }
 
-const mapStateToProps = (state: State) => ({
-  country: state.country,
-  city: state.city,
-  state: state.state,
-  lang: state.lang,
-});
-
-const mapDispatchToProps = {
-  updateCurrentLocation: updateLocation,
-  updateCityEngName: getCityEngName,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Location);
+export default connector(Location);

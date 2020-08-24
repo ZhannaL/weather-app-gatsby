@@ -167,6 +167,7 @@ export const getDataToPicUrl = (
 ): string => {
   const hour = new Date()
     .toLocaleString('en-GB', {
+      // @ts-ignore
       timeStyle: 'short',
       ...(timeZone ? { timeZone } : null),
     })

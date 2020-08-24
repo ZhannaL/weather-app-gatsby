@@ -1,6 +1,6 @@
 import React from 'react';
 import { Typography } from '@material-ui/core';
-import { connect } from 'react-redux';
+import { connect, ConnectedProps } from 'react-redux';
 import { State } from 'src/Reducers/reducers';
 import classnames from 'classnames';
 import { updateWeather } from 'src/Reducers/actions';
@@ -15,17 +15,26 @@ import icons from 'src/styles/icons.module.css';
 import style from './weatherMain.module.css';
 import { Wrapper } from '../Wrapper';
 
-type Props = Readonly<{
-  engCity: string;
-  updateCurrWeather: typeof updateWeather;
-  lang: 'en' | 'ru' | 'pl';
-  tempType: string;
-  weatherCode: number;
-  appTemp: number;
-  wind: number;
-  humidity: number;
-  temp: number;
-}>;
+const mapStateToProps = (state: State) => ({
+  engCity: state.engCity,
+  lang: state.lang,
+  tempType: state.tempType,
+  weatherCode: state.weatherToday.weatherCode,
+  appTemp: state.weatherToday.appTemp,
+  wind: state.weatherToday.wind,
+  humidity: state.weatherToday.humidity,
+  temp: state.weatherToday.temp,
+});
+
+const mapDispatchToProps = {
+  updateCurrWeather: updateWeather,
+};
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+type Props = PropsFromRedux;
 
 class WeatherMain extends React.PureComponent<Props> {
   componentDidUpdate(oldProps: Props) {
@@ -79,19 +88,4 @@ class WeatherMain extends React.PureComponent<Props> {
   }
 }
 
-const mapStateToProps = (state: State) => ({
-  engCity: state.engCity,
-  lang: state.lang,
-  tempType: state.tempType,
-  weatherCode: state.weatherToday.weatherCode,
-  appTemp: state.weatherToday.appTemp,
-  wind: state.weatherToday.wind,
-  humidity: state.weatherToday.humidity,
-  temp: state.weatherToday.temp,
-});
-
-const mapDispatchToProps = {
-  updateCurrWeather: updateWeather,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(WeatherMain);
+export default connector(WeatherMain);

@@ -1,5 +1,5 @@
 export type Action =
-  | Readonly<{ type: 'CHANGE_LANG'; payload: string }>
+  | Readonly<{ type: 'CHANGE_LANG'; payload: 'en' | 'ru' | 'pl' }>
   | Readonly<{ type: 'CHANGE_TEMP_TYPE'; payload: string }>
   | Readonly<{
       type: 'WRONG_UPDATE_LOCATION';
@@ -88,10 +88,10 @@ const defaultState = {
     day3: 0,
     day3WeatherCode: 0,
   },
-};
+} as const;
 
 export type State = Readonly<{
-  lang: string;
+  lang: 'en' | 'ru' | 'pl';
   tempType: string;
   country: string;
   city: string;

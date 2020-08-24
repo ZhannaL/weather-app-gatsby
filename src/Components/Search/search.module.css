@@ -1,3 +1,5 @@
+@import '~src/styles/spacing.css';
+
 .search {
   grid-area: search;
 
@@ -6,5 +8,5 @@
 
 .btnSearch {
   height: 56px;
-  padding: 4px 34px;
+  padding: var(--space-xs) var(--space-m);
 }

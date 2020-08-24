@@ -21,7 +21,7 @@ import {
   loadingBackground,
   updateURLBackground,
 } from 'src/Reducers/actions';
-import { connect } from 'react-redux';
+import { connect, ConnectedProps } from 'react-redux';
 import style from './controls.module.css';
 import { Wrapper } from '../Wrapper';
 
@@ -42,22 +42,40 @@ const useStyles = (theme: Theme) =>
     },
   });
 
+const mapStateToProps = (state: State) => ({
+  lang: state.lang,
+  tempType: state.tempType,
+  city: state.city,
+  isLoading: state.loadingBackround,
+});
+
+const mapDispatchToProps = {
+  changelanguage: changelang,
+  changeTemperature: changeTempType,
+  updateCurrentLocation: updateLocation,
+  loading: loadingBackground,
+  updateURL: updateURLBackground,
+};
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
 type Props = Readonly<{
   classes: {
     select: string;
     radio: string;
     selectIcon: string;
   };
-  changelanguage: typeof changelang;
-  changeTemperature: typeof changeTempType;
-  updateCurrentLocation: typeof updateLocation;
-  loading: typeof loadingBackground;
-  updateURL: typeof updateURLBackground;
-  lang: string;
-  tempType: string;
-  city: string;
-  isLoading: boolean;
-}>;
+}> &
+  PropsFromRedux;
+
+type Language = 'ru' | 'en' | 'pl';
+
+const isLanguage = (value: unknown): value is Language => {
+  if (value === 'ru' || value === 'en' || value === 'pl') return true;
+  return false;
+};
 
 class Controls extends React.PureComponent<Props> {
   componentDidMount() {
@@ -105,8 +123,10 @@ class Controls extends React.PureComponent<Props> {
               icon: classes.selectIcon,
             }}
             onChange={(event) => {
-              changelanguage(String(event.target.value));
-              updateCurrentLocation(String(event.target.value), city);
+              if (isLanguage(event.target.value)) {
+                changelanguage(event.target.value);
+                updateCurrentLocation(event.target.value, city);
+              }
             }}
           >
             <MenuItem value="en">EN</MenuItem>
@@ -154,22 +174,4 @@ class Controls extends React.PureComponent<Props> {
   }
 }
 
-const mapStateToProps = (state: State) => ({
-  lang: state.lang,
-  tempType: state.tempType,
-  city: state.city,
-  isLoading: state.loadingBackround,
-});
-
-const mapDispatchToProps = {
-  changelanguage: changelang,
-  changeTemperature: changeTempType,
-  updateCurrentLocation: updateLocation,
-  loading: loadingBackground,
-  updateURL: updateURLBackground,
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withStyles(useStyles)(Controls));
+export default connector(withStyles(useStyles)(Controls));
