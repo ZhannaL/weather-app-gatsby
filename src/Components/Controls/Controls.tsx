@@ -28,13 +28,9 @@ import { Wrapper } from '../Wrapper';
 const useStyles = (theme: Theme) =>
   createStyles({
     select: {
-      padding: '6px',
+      padding: '10px',
+      width: '32px',
       color: theme.palette.primary.main,
-    },
-
-    selectRoot: {
-      borderBottom: '1px solid',
-      borderColor: theme.palette.primary.main,
     },
 
     selectIcon: {
@@ -50,7 +46,6 @@ type Props = Readonly<{
   classes: {
     select: string;
     radio: string;
-    selectRoot: string;
     selectIcon: string;
   };
   changelanguage: typeof changelang;
@@ -84,8 +79,6 @@ class Controls extends React.PureComponent<Props> {
       updateURL,
     } = this.props;
 
-    // console.log(this.props);
-
     return (
       <Wrapper className={style.controls}>
         <Tooltip title="change background image">
@@ -108,7 +101,6 @@ class Controls extends React.PureComponent<Props> {
             labelId="Language"
             value={lang}
             classes={{
-              root: classes.selectRoot,
               filled: classes.select,
               icon: classes.selectIcon,
             }}

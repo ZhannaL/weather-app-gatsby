@@ -39,10 +39,7 @@ class Time extends React.PureComponent<Props, CompState> {
 
   render(): JSX.Element {
     const { lang, timeZone } = this.props;
-    // const timeZone = 'Europe/Warsaw';
-
     const { currentTime } = this.state;
-
     const local = getLocal(lang);
 
     const dayWeek = currentTime.toLocaleString(local, {

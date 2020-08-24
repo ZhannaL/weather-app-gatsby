@@ -75,7 +75,6 @@ class WeatherForecast extends React.PureComponent<Props> {
       day2Code,
       day3Code,
     } = this.props;
-    // console.log(this.props);
     return (
       <Wrapper className={style.weatherForecast}>
         <ForecastDay

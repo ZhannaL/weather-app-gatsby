@@ -7,10 +7,9 @@
 }
 
 .btnBackground {
-  min-width: 35px;
-  width: 35px;
-  height: 35px;
-  padding: 3px;
+  min-width: 40px;
+  height: 40px;
+  padding: 7px;
 }
 
 .selectControl {

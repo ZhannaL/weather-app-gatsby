@@ -17,7 +17,6 @@ import { Wrapper } from '../Wrapper';
 
 type Props = Readonly<{
   engCity: string;
-  state: string;
   updateCurrWeather: typeof updateWeather;
   lang: 'en' | 'ru' | 'pl';
   tempType: string;
@@ -30,7 +29,7 @@ type Props = Readonly<{
 
 class WeatherMain extends React.PureComponent<Props> {
   componentDidUpdate(oldProps: Props) {
-    const { updateCurrWeather, engCity, state } = this.props;
+    const { updateCurrWeather, engCity } = this.props;
     if (engCity && oldProps.engCity !== engCity) {
       updateCurrWeather();
     }
@@ -82,7 +81,6 @@ class WeatherMain extends React.PureComponent<Props> {
 
 const mapStateToProps = (state: State) => ({
   engCity: state.engCity,
-  state: state.state,
   lang: state.lang,
   tempType: state.tempType,
   weatherCode: state.weatherToday.weatherCode,

@@ -8,7 +8,6 @@
     'temp icon'
     'temp info';
   grid-template-columns: 2fr 1fr;
-  /* text-transform: uppercase; */
 }
 
 .tempNow {
@@ -41,7 +40,6 @@
       'temp icon'
       'info info';
     grid-template-columns: 1fr 1fr;
-    /* text-transform: uppercase; */
   }
 
   .tempNow {
