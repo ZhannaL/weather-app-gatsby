@@ -7,14 +7,14 @@
 }
 
 .btnBackground {
-  min-width: 26px;
-  width: 26px;
-  height: 26px;
+  min-width: 35px;
+  width: 35px;
+  height: 35px;
   padding: 3px;
 }
 
 .selectControl {
-  margin: 0 10px;
+  margin: 0 20px;
 }
 
 .iconLoading {

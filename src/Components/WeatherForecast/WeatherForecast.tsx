@@ -3,7 +3,6 @@ import { Typography } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { State } from 'src/Reducers/reducers';
 import classnames from 'classnames';
-import { updateWeather } from 'src/Reducers/actions';
 import {
   getTepmByType,
   getIconClassNameWeatherByCode,
@@ -52,7 +51,6 @@ const ForecastDay = ({
 
 type Props = Readonly<{
   city: string;
-  updateCurrWeather: typeof updateWeather;
   lang: 'en' | 'ru' | 'pl';
   tempType: string;
   timeZone: string;
@@ -122,8 +120,4 @@ const mapStateToProps = (state: State) => ({
   day3Code: state.weatherDays.day3WeatherCode,
 });
 
-const mapDispatchToProps = {
-  updateCurrWeather: updateWeather,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(WeatherForecast);
+export default connect(mapStateToProps, null)(WeatherForecast);

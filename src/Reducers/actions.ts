@@ -32,6 +32,39 @@ export const updateLocation = (lang: string, city = ''): ThunkAction => {
             wrongSearch: false,
           },
         });
+        // getLinkToImage(data.results[0].components.city).then((urlLink) =>
+        //   dispatch({
+        //     type: 'UPDATE_URL_IMAGE',
+        //     payload: {
+        //       url: urlLink,
+        //       loading: false,
+        //     },
+        //   })
+        // );
+      } else {
+        dispatch({
+          type: 'WRONG_UPDATE_LOCATION',
+          payload: {
+            wrongSearch: true,
+          },
+        });
+      }
+    });
+  };
+};
+
+export const getCityEngName = (city = ''): ThunkAction => {
+  return (dispatch, getState) => {
+    getLocation('en', city).then((data) => {
+      if (data.results[0]) {
+        dispatch({
+          type: 'GET_CITY_ENG_NAME',
+          payload: {
+            engCity:
+              data.results[0].components.city ??
+              data.results[0].components.state,
+          },
+        });
         getLinkToImage(data.results[0].components.city).then((urlLink) =>
           dispatch({
             type: 'UPDATE_URL_IMAGE',
@@ -49,15 +82,18 @@ export const updateLocation = (lang: string, city = ''): ThunkAction => {
           },
         });
       }
+      console.log('getCityEngName', getState());
     });
   };
 };
 
 export const updateWeather = (): ThunkAction => {
   return (dispatch, getState) => {
-    const { city, countryCode } = getState();
-    getWeather(city, countryCode)
-      .then((result) =>
+    const { engCity, countryCode, state, city } = getState();
+    const queryWeather = city !== undefined ? engCity : state;
+    getWeather(queryWeather, countryCode)
+      .then((result) => {
+        console.log(result);
         dispatch({
           type: 'UPDATE_WEATHER',
           payload: {
@@ -77,8 +113,9 @@ export const updateWeather = (): ThunkAction => {
               day3WeatherCode: result.data[3].weather.code,
             },
           },
-        })
-      )
+        });
+        console.log('updateWeather', getState());
+      })
       .catch((err) => console.log(err));
   };
 };

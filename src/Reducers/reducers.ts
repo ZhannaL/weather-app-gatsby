@@ -46,6 +46,10 @@ export type Action =
   | Readonly<{
       type: 'UPDATE_URL_IMAGE';
       payload: { url: string; loading: boolean };
+    }>
+  | Readonly<{
+      type: 'GET_CITY_ENG_NAME';
+      payload: { engCity: string };
     }>;
 
 export type ThunkAction = (
@@ -58,6 +62,7 @@ const defaultState = {
   tempType: 'celsius',
   country: '',
   city: '',
+  engCity: '',
   state: '',
   lat: '',
   lng: '',
@@ -90,6 +95,7 @@ export type State = Readonly<{
   tempType: string;
   country: string;
   city: string;
+  engCity: string;
   state: string;
   lat: string;
   lng: string;
@@ -130,6 +136,13 @@ function reducers(state: State = defaultState, action: Action): State {
       return {
         ...state,
         tempType: action.payload,
+      };
+    }
+
+    case 'GET_CITY_ENG_NAME': {
+      return {
+        ...state,
+        engCity: action.payload.engCity,
       };
     }
 

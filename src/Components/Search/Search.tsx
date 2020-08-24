@@ -6,12 +6,11 @@ import {
   FilledInput,
   InputLabel,
   FormControl,
-  FormHelperText,
 } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import CloseIcon from '@material-ui/icons/Close';
 import MyLocationIcon from '@material-ui/icons/MyLocation';
-import { updateLocation } from 'src/Reducers/actions';
+import { updateLocation, getCityEngName } from 'src/Reducers/actions';
 import { connect } from 'react-redux';
 import { State } from 'src/Reducers/reducers';
 import style from './search.module.css';
@@ -19,6 +18,7 @@ import { Wrapper } from '../Wrapper';
 
 type Props = Readonly<{
   updateCurrentLocation: typeof updateLocation;
+  updateCityEngName: typeof getCityEngName;
   lang: string;
   isWrong: boolean;
 }>;
@@ -40,8 +40,12 @@ class Search extends React.PureComponent<Props, CompState> {
 
   render(): JSX.Element {
     const { currentSearch } = this.state;
-    const { updateCurrentLocation, lang, isWrong } = this.props;
-    console.log(isWrong);
+    const {
+      updateCurrentLocation,
+      updateCityEngName,
+      lang,
+      isWrong,
+    } = this.props;
     return (
       <Wrapper className={style.search}>
         <FormControl fullWidth variant="filled">
@@ -70,7 +74,10 @@ class Search extends React.PureComponent<Props, CompState> {
                 </InputAdornment>
                 <InputAdornment position="end">
                   <IconButton
-                    onClick={() => updateCurrentLocation(lang)}
+                    onClick={() => {
+                      updateCurrentLocation(lang);
+                      updateCityEngName();
+                    }}
                     edge="end"
                   >
                     <MyLocationIcon />
@@ -87,7 +94,10 @@ class Search extends React.PureComponent<Props, CompState> {
         </FormControl>
 
         <Button
-          onClick={() => updateCurrentLocation(lang, currentSearch)}
+          onClick={() => {
+            updateCurrentLocation(lang, currentSearch);
+            updateCityEngName(currentSearch);
+          }}
           variant="contained"
           size="small"
           color="primary"
@@ -107,6 +117,7 @@ const mapStateToProps = (state: State) => ({
 
 const mapDispatchToProps = {
   updateCurrentLocation: updateLocation,
+  updateCityEngName: getCityEngName,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Search);

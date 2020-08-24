@@ -17,3 +17,9 @@
 .map canvas {
   position: absolute;
 }
+
+.latLng {
+  align-self: flex-end;
+  text-align: end;
+  font-weight: bold;
+}

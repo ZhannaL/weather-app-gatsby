@@ -3,7 +3,6 @@
 
 .appBackground {
   position: relative;
-  /* background-image: url('../styles/images/land.jpg'); */
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -20,8 +19,38 @@
     'location  map '
     'time map'
     'todayWeather map'
-    'forecast map'
-    '. . ';
+    'forecast map';
 
   grid-template-columns: 60% 1fr;
+}
+
+@media only screen and (max-width: 1000px) {
+  .appWrapper {
+    padding: var(--space-m);
+    display: grid;
+    grid-template-areas:
+      'controls search'
+      'location location '
+      'time time'
+      'todayWeather todayWeather'
+      'forecast forecast'
+      'map map ';
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .appWrapper {
+    padding: var(--space-m);
+    display: grid;
+    grid-template-areas:
+      'controls'
+      'search'
+      'location'
+      'time'
+      'todayWeather'
+      'forecast'
+      'map';
+    grid-template-columns: 1fr;
+  }
 }

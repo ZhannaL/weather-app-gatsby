@@ -54,11 +54,11 @@ class MapBlock extends React.PureComponent<Props> {
     return (
       <Wrapper className={style.mapBlock}>
         <div className={style.map} id="myMap" />
-        <Typography color="inherit" variant="h5">
-          {getTextlatitudelongitude('lat')(lang)}: {lat}
-        </Typography>
-        <Typography color="inherit" variant="h5">
-          {getTextlatitudelongitude('lng')(lang)}: {lng}
+        <Typography color="inherit" variant="h5" className={style.latLng}>
+          <p>{getTextlatitudelongitude('lat')(lang)}:</p>
+          <p>{lat}</p>
+          <p>{getTextlatitudelongitude('lng')(lang)}: </p>
+          <p>{lng} </p>
         </Typography>
       </Wrapper>
     );

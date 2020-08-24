@@ -4,9 +4,7 @@ import { connect } from 'react-redux';
 import { State } from 'src/Reducers/reducers';
 import classnames from 'classnames';
 import { updateWeather } from 'src/Reducers/actions';
-
 import {
-  getLocal,
   getTepmByType,
   getWetherDescrByCode,
   getIconClassNameWeatherByCode,
@@ -18,7 +16,8 @@ import style from './weatherMain.module.css';
 import { Wrapper } from '../Wrapper';
 
 type Props = Readonly<{
-  city: string;
+  engCity: string;
+  state: string;
   updateCurrWeather: typeof updateWeather;
   lang: 'en' | 'ru' | 'pl';
   tempType: string;
@@ -31,8 +30,8 @@ type Props = Readonly<{
 
 class WeatherMain extends React.PureComponent<Props> {
   componentDidUpdate(oldProps: Props) {
-    const { updateCurrWeather, city } = this.props;
-    if (city && oldProps.city !== city) {
+    const { updateCurrWeather, engCity, state } = this.props;
+    if (engCity && oldProps.engCity !== engCity) {
       updateCurrWeather();
     }
   }
@@ -82,7 +81,8 @@ class WeatherMain extends React.PureComponent<Props> {
 }
 
 const mapStateToProps = (state: State) => ({
-  city: state.city,
+  engCity: state.engCity,
+  state: state.state,
   lang: state.lang,
   tempType: state.tempType,
   weatherCode: state.weatherToday.weatherCode,

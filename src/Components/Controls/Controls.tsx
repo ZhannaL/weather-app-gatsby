@@ -11,6 +11,7 @@ import {
   withStyles,
   createStyles,
   Theme,
+  Tooltip,
 } from '@material-ui/core';
 import type { State } from 'src/Reducers/reducers';
 import {
@@ -87,18 +88,20 @@ class Controls extends React.PureComponent<Props> {
 
     return (
       <Wrapper className={style.controls}>
-        <Button
-          variant="outlined"
-          size="small"
-          color="primary"
-          className={style.btnBackground}
-          onClick={() => {
-            loading();
-            updateURL(city);
-          }}
-        >
-          <AutorenewIcon className={isLoading ? style.iconLoading : ''} />
-        </Button>
+        <Tooltip title="change background image">
+          <Button
+            variant="outlined"
+            size="small"
+            color="primary"
+            className={style.btnBackground}
+            onClick={() => {
+              loading();
+              updateURL(city);
+            }}
+          >
+            <AutorenewIcon className={isLoading ? style.iconLoading : ''} />
+          </Button>
+        </Tooltip>
 
         <FormControl variant="filled" className={style.selectControl}>
           <Select

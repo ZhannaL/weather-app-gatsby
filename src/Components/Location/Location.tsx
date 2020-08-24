@@ -2,13 +2,14 @@ import React from 'react';
 import { Typography } from '@material-ui/core';
 
 import { State } from 'src/Reducers/reducers';
-import { updateLocation } from 'src/Reducers/actions';
+import { updateLocation, getCityEngName } from 'src/Reducers/actions';
 import { connect } from 'react-redux';
 import style from './location.module.css';
 import { Wrapper } from '../Wrapper';
 
 type Props = Readonly<{
   updateCurrentLocation: typeof updateLocation;
+  updateCityEngName: typeof getCityEngName;
   country: string;
   city: string;
   state: string;
@@ -17,19 +18,10 @@ type Props = Readonly<{
 
 class Location extends React.PureComponent<Props> {
   componentDidMount() {
-    console.log(1);
-    const { updateCurrentLocation, lang } = this.props;
+    const { updateCurrentLocation, updateCityEngName, lang } = this.props;
     updateCurrentLocation(lang);
+    updateCityEngName();
   }
-
-  // componentDidUpdate(oldProps: Props) {
-  //   const { updateCurrentLocation, lang, city } = this.props;
-
-  //   if (oldProps.city !== city || oldProps.lang !== lang) {
-  //     // console.log(this.props);
-  //     updateCurrentLocation(lang, city);
-  //   }
-  // }
 
   render(): JSX.Element {
     const { country, city, state } = this.props;
@@ -38,7 +30,7 @@ class Location extends React.PureComponent<Props> {
       <Wrapper className={style.location}>
         <Typography color="inherit" variant="h4">
           <p>
-            {city} , {country}
+            {city} {city ? ',' : ''} {country}
           </p>
           <p>{state}</p>
         </Typography>
@@ -56,6 +48,7 @@ const mapStateToProps = (state: State) => ({
 
 const mapDispatchToProps = {
   updateCurrentLocation: updateLocation,
+  updateCityEngName: getCityEngName,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Location);
