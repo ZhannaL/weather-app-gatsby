@@ -1,7 +1,7 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { State } from 'src/Reducers/reducers';
+import { connect, ConnectedProps } from 'react-redux';
 import image from 'src/styles/images/land.jpg';
+import { State } from 'src/Reducers/rootReducer';
 import style from './app.module.css';
 import { Controls } from './Controls';
 import { Search } from './Search';
@@ -11,9 +11,15 @@ import { MapBlock } from './Map';
 import { WeatherMain } from './WeatherMain';
 import { WeatherForecast } from './WeatherForecast';
 
-type Props = Readonly<{
-  url: string;
-}>;
+const mapStateToProps = (state: State) => ({
+  url: state.controls.url,
+});
+
+const connector = connect(mapStateToProps, {});
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+type Props = PropsFromRedux;
 
 class App extends React.PureComponent<Props> {
   render(): JSX.Element {
@@ -39,8 +45,4 @@ class App extends React.PureComponent<Props> {
   }
 }
 
-const mapStateToProps = (state: State) => ({
-  url: state.url,
-});
-
-export default connect(mapStateToProps, null)(App);
+export default connector(App);

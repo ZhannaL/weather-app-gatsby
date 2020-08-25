@@ -1,17 +1,5 @@
-import {
-  getLocation,
-  getWeather,
-  getLinkToImage,
-} from 'src/Translations/queries';
-import type { Action, ThunkAction } from './reducers';
-
-export const changelang = (lang: 'en' | 'ru' | 'pl'): Action => {
-  return { type: 'CHANGE_LANG', payload: lang };
-};
-
-export const changeTempType = (tempType: string): Action => {
-  return { type: 'CHANGE_TEMP_TYPE', payload: tempType };
-};
+import { ThunkAction } from 'src/Reducers/actionTypes';
+import { getLocation, getLinkToImage } from 'src/Translations/queries';
 
 export const updateLocation = (
   lang: 'en' | 'ru' | 'pl',
@@ -77,52 +65,5 @@ export const getCityEngName = (city = ''): ThunkAction => {
         });
       }
     });
-  };
-};
-
-export const updateWeather = (): ThunkAction => {
-  return (dispatch, getState) => {
-    const { engCity, countryCode, state, city } = getState();
-    const queryWeather = city !== undefined ? engCity : state;
-    getWeather(queryWeather, countryCode).then((result) => {
-      dispatch({
-        type: 'UPDATE_WEATHER',
-        payload: {
-          weatherToday: {
-            temp: result.data[0].temp,
-            appTemp: result.data[0].app_min_temp,
-            wind: result.data[0].wind_spd,
-            humidity: result.data[0].rh,
-            weatherCode: result.data[0].weather.code,
-          },
-          weatherDays: {
-            day1: result.data[1].max_temp,
-            day1WeatherCode: result.data[1].weather.code,
-            day2: result.data[2].max_temp,
-            day2WeatherCode: result.data[2].weather.code,
-            day3: result.data[3].max_temp,
-            day3WeatherCode: result.data[3].weather.code,
-          },
-        },
-      });
-    });
-  };
-};
-
-export const loadingBackground = (): Action => {
-  return { type: 'LOADING_BACKGROUND', payload: true };
-};
-
-export const updateURLBackground = (query: string): ThunkAction => {
-  return (dispatch) => {
-    getLinkToImage(query).then((urlLink) =>
-      dispatch({
-        type: 'UPDATE_URL_IMAGE',
-        payload: {
-          url: urlLink,
-          loading: false,
-        },
-      })
-    );
   };
 };

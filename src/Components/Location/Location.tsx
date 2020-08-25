@@ -1,17 +1,16 @@
 import React from 'react';
 import { Typography } from '@material-ui/core';
-
-import { State } from 'src/Reducers/reducers';
-import { updateLocation, getCityEngName } from 'src/Reducers/actions';
 import { connect, ConnectedProps } from 'react-redux';
+import { State } from 'src/Reducers/rootReducer';
+import { updateLocation, getCityEngName } from './LocationActions';
 import style from './location.module.css';
 import { Wrapper } from '../Wrapper';
 
 const mapStateToProps = (state: State) => ({
-  country: state.country,
-  city: state.city,
-  state: state.state,
-  lang: state.lang,
+  country: state.location.country,
+  city: state.location.city,
+  state: state.location.state,
+  lang: state.controls.lang,
 });
 
 const mapDispatchToProps = {

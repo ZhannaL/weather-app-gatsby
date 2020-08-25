@@ -10,6 +10,7 @@ module.exports = {
         pages: path.join(__dirname, 'src/pages'),
       },
     },
+    `gatsby-plugin-typescript`,
     'gatsby-plugin-postcss',
     `gatsby-plugin-react-helmet`,
     {

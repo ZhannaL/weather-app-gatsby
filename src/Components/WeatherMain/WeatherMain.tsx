@@ -1,9 +1,7 @@
 import React from 'react';
 import { Typography } from '@material-ui/core';
 import { connect, ConnectedProps } from 'react-redux';
-import { State } from 'src/Reducers/reducers';
 import classnames from 'classnames';
-import { updateWeather } from 'src/Reducers/actions';
 import {
   getTepmByType,
   getWetherDescrByCode,
@@ -12,18 +10,20 @@ import {
   getWindSPD,
 } from 'src/Translations/helpers';
 import icons from 'src/styles/icons.module.css';
+import { State } from 'src/Reducers/rootReducer';
+import { updateWeather } from './WeatherActions';
 import style from './weatherMain.module.css';
 import { Wrapper } from '../Wrapper';
 
 const mapStateToProps = (state: State) => ({
-  engCity: state.engCity,
-  lang: state.lang,
-  tempType: state.tempType,
-  weatherCode: state.weatherToday.weatherCode,
-  appTemp: state.weatherToday.appTemp,
-  wind: state.weatherToday.wind,
-  humidity: state.weatherToday.humidity,
-  temp: state.weatherToday.temp,
+  engCity: state.location.engCity,
+  lang: state.controls.lang,
+  tempType: state.controls.tempType,
+  weatherCode: state.weather.weatherToday.weatherCode,
+  appTemp: state.weather.weatherToday.appTemp,
+  wind: state.weather.weatherToday.wind,
+  humidity: state.weather.weatherToday.humidity,
+  temp: state.weather.weatherToday.temp,
 });
 
 const mapDispatchToProps = {
@@ -54,7 +54,6 @@ class WeatherMain extends React.PureComponent<Props> {
       wind,
       humidity,
     } = this.props;
-    // console.log(this.props);
     return (
       <Wrapper className={style.weatherMain}>
         <Typography color="inherit" variant="h2" className={style.tempNow}>

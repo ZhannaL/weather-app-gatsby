@@ -1,7 +1,6 @@
 import React from 'react';
 import { Typography } from '@material-ui/core';
-import { connect } from 'react-redux';
-import { State } from 'src/Reducers/reducers';
+import { connect, ConnectedProps } from 'react-redux';
 import classnames from 'classnames';
 import {
   getTepmByType,
@@ -9,6 +8,7 @@ import {
   get3DaysWeekName,
 } from 'src/Translations/helpers';
 import icons from 'src/styles/icons.module.css';
+import { State } from 'src/Reducers/rootReducer';
 import style from './weatherForecast.module.css';
 import { Wrapper } from '../Wrapper';
 
@@ -49,18 +49,24 @@ const ForecastDay = ({
   </div>
 );
 
-type Props = Readonly<{
-  city: string;
-  lang: 'en' | 'ru' | 'pl';
-  tempType: string;
-  timeZone: string;
-  day1: number;
-  day2: number;
-  day3: number;
-  day1Code: number;
-  day2Code: number;
-  day3Code: number;
-}>;
+const mapStateToProps = (state: State) => ({
+  city: state.location.city,
+  lang: state.controls.lang,
+  tempType: state.controls.tempType,
+  timeZone: state.location.timeZone,
+  day1: state.weather.weatherDays.day1,
+  day2: state.weather.weatherDays.day2,
+  day3: state.weather.weatherDays.day3,
+  day1Code: state.weather.weatherDays.day1WeatherCode,
+  day2Code: state.weather.weatherDays.day2WeatherCode,
+  day3Code: state.weather.weatherDays.day3WeatherCode,
+});
+
+const connector = connect(mapStateToProps, {});
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+type Props = PropsFromRedux;
 
 class WeatherForecast extends React.PureComponent<Props> {
   render(): JSX.Element {
@@ -106,17 +112,4 @@ class WeatherForecast extends React.PureComponent<Props> {
   }
 }
 
-const mapStateToProps = (state: State) => ({
-  city: state.city,
-  lang: state.lang,
-  tempType: state.tempType,
-  timeZone: state.timeZone,
-  day1: state.weatherDays.day1,
-  day2: state.weatherDays.day2,
-  day3: state.weatherDays.day3,
-  day1Code: state.weatherDays.day1WeatherCode,
-  day2Code: state.weatherDays.day2WeatherCode,
-  day3Code: state.weatherDays.day3WeatherCode,
-});
-
-export default connect(mapStateToProps, null)(WeatherForecast);
+export default connector(WeatherForecast);

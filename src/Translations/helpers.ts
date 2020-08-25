@@ -30,7 +30,7 @@ export const getTextlatitudelongitude = (dms: 'lat' | 'lng') => (
   language: 'en' | 'ru' | 'pl'
 ): string => weatherDMS[dms][language];
 
-export const getTepmByType = (temp: number, tempType: string): number => {
+export const getTepmByType = (temp: number, tempType?: string): number => {
   if (tempType === 'celsius') {
     return Math.ceil(temp);
   }
@@ -138,7 +138,7 @@ export const WeatherAPICodesIcon: Record<number, string> = {
 export const getIconClassNameWeatherByCode = (code: number): string =>
   WeatherAPICodesIcon[code || 900];
 
-export const getShortWeatherByCode = (code: number): string => {
+export const getShortWeatherByCode = (code: number | string): string => {
   if (code >= 200 && code < 300) {
     return 'thunder';
   }

@@ -1,14 +1,14 @@
 import React from 'react';
 import { Typography } from '@material-ui/core';
 import { connect, ConnectedProps } from 'react-redux';
-import { State } from 'src/Reducers/reducers';
 import { getLocal } from 'src/Translations/helpers';
+import { State } from 'src/Reducers/rootReducer';
 import style from './time.module.css';
 import { Wrapper } from '../Wrapper';
 
 const mapStateToProps = (state: State) => ({
-  lang: state.lang,
-  timeZone: state.timeZone,
+  lang: state.controls.lang,
+  timeZone: state.location.timeZone,
 });
 
 const connector = connect(mapStateToProps, null);

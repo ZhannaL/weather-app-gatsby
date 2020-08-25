@@ -10,15 +10,15 @@ import {
 import SearchIcon from '@material-ui/icons/Search';
 import CloseIcon from '@material-ui/icons/Close';
 import MyLocationIcon from '@material-ui/icons/MyLocation';
-import { updateLocation, getCityEngName } from 'src/Reducers/actions';
 import { connect, ConnectedProps } from 'react-redux';
-import { State } from 'src/Reducers/reducers';
+import { State } from 'src/Reducers/rootReducer';
+import { updateLocation, getCityEngName } from '../Location/LocationActions';
 import style from './search.module.css';
 import { Wrapper } from '../Wrapper';
 
 const mapStateToProps = (state: State) => ({
-  isWrong: state.wrongSearch,
-  lang: state.lang,
+  isWrong: state.location.wrongSearch,
+  lang: state.controls.lang,
 });
 
 const mapDispatchToProps = {

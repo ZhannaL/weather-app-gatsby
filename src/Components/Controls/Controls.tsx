@@ -13,17 +13,17 @@ import {
   Theme,
   Tooltip,
 } from '@material-ui/core';
-import type { State } from 'src/Reducers/reducers';
+import { connect, ConnectedProps } from 'react-redux';
+import { State } from 'src/Reducers/rootReducer';
+import style from './controls.module.css';
+import { Wrapper } from '../Wrapper';
+import { updateLocation } from '../Location/LocationActions';
 import {
   changelang,
   changeTempType,
-  updateLocation,
   loadingBackground,
   updateURLBackground,
-} from 'src/Reducers/actions';
-import { connect, ConnectedProps } from 'react-redux';
-import style from './controls.module.css';
-import { Wrapper } from '../Wrapper';
+} from './ControlsActions';
 
 const useStyles = (theme: Theme) =>
   createStyles({
@@ -43,10 +43,10 @@ const useStyles = (theme: Theme) =>
   });
 
 const mapStateToProps = (state: State) => ({
-  lang: state.lang,
-  tempType: state.tempType,
-  city: state.city,
-  isLoading: state.loadingBackround,
+  lang: state.controls.lang,
+  tempType: state.controls.tempType,
+  city: state.location.city,
+  isLoading: state.controls.loadingBackround,
 });
 
 const mapDispatchToProps = {

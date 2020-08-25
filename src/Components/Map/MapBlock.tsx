@@ -1,26 +1,31 @@
 import React from 'react';
 import { Typography } from '@material-ui/core';
 import mapboxgl, { Map as Mapgl } from 'mapbox-gl';
-import { State } from 'src/Reducers/reducers';
-import { connect } from 'react-redux';
+import { connect, ConnectedProps } from 'react-redux';
 import { getTextlatitudelongitude } from 'src/Translations/helpers';
+import { State } from 'src/Reducers/rootReducer';
 import style from './map.module.css';
 import { Wrapper } from '../Wrapper';
 
-type Props = Readonly<{
-  lat: string;
-  lng: string;
-  latMap: number;
-  lngMap: number;
-  lang: 'en' | 'ru' | 'pl';
-}>;
+const mapStateToProps = (state: State) => ({
+  lat: state.location.lat,
+  lng: state.location.lng,
+  latMap: state.location.latMap,
+  lngMap: state.location.lngMap,
+  lang: state.controls.lang,
+});
+
+const connector = connect(mapStateToProps, {});
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+type Props = PropsFromRedux;
 
 class MapBlock extends React.PureComponent<Props> {
   mapboxgl: Mapgl | null;
 
   constructor(props: Props) {
     super(props);
-
     this.mapboxgl = null;
   }
 
@@ -65,12 +70,4 @@ class MapBlock extends React.PureComponent<Props> {
   }
 }
 
-const mapStateToProps = (state: State) => ({
-  lat: state.lat,
-  lng: state.lng,
-  latMap: state.latMap,
-  lngMap: state.lngMap,
-  lang: state.lang,
-});
-
-export default connect(mapStateToProps, null)(MapBlock);
+export default connector(MapBlock);
