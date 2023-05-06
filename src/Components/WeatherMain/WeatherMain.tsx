@@ -9,10 +9,10 @@ import {
   getWeatherInfo,
   getWindSPD,
 } from 'src/Translations/helpers';
-import icons from 'src/styles/icons.module.css';
+import * as icons from 'src/styles/icons.module.css';
 import { State } from 'src/Reducers/rootReducer';
 import { updateWeather } from './WeatherActions';
-import style from './weatherMain.module.css';
+import * as style from './weatherMain.module.css';
 import { Wrapper } from '../Wrapper';
 
 const mapStateToProps = (state: State) => ({
@@ -45,15 +45,8 @@ class WeatherMain extends React.PureComponent<Props> {
   }
 
   render(): JSX.Element {
-    const {
-      lang,
-      tempType,
-      weatherCode,
-      temp,
-      appTemp,
-      wind,
-      humidity,
-    } = this.props;
+    const { lang, tempType, weatherCode, temp, appTemp, wind, humidity } =
+      this.props;
     return (
       <Wrapper className={style.weatherMain}>
         <Typography color="inherit" variant="h2" className={style.tempNow}>

@@ -1,11 +1,10 @@
 import { ThunkAction } from 'src/Reducers/actionTypes';
 import { getLocation, getLinkToImage } from 'src/Translations/queries';
 
-export const updateLocation = (
-  lang: 'en' | 'ru' | 'pl',
-  city = ''
-): ThunkAction => {
-  return (dispatch) => {
+export const updateLocation =
+  (lang: 'en' | 'ru' | 'pl', city = ''): ThunkAction =>
+  (dispatch) => {
+    console.log('updateLocation', city);
     getLocation(lang, city).then((data) => {
       if (data.results[0]) {
         dispatch({
@@ -33,10 +32,10 @@ export const updateLocation = (
       }
     });
   };
-};
 
-export const getCityEngName = (city = ''): ThunkAction => {
-  return (dispatch) => {
+export const getCityEngName =
+  (city = ''): ThunkAction =>
+  (dispatch) => {
     getLocation('en', city).then((data) => {
       if (data.results[0]) {
         dispatch({
@@ -66,4 +65,3 @@ export const getCityEngName = (city = ''): ThunkAction => {
       }
     });
   };
-};

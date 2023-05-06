@@ -26,9 +26,10 @@ export const getTextButtonSearch = (language: string): string => {
   }
 };
 
-export const getTextlatitudelongitude = (dms: 'lat' | 'lng') => (
-  language: 'en' | 'ru' | 'pl'
-): string => weatherDMS[dms][language];
+export const getTextlatitudelongitude =
+  (dms: 'lat' | 'lng') =>
+  (language: 'en' | 'ru' | 'pl'): string =>
+    weatherDMS[dms][language];
 
 export const getTepmByType = (temp: number, tempType?: string): number => {
   if (tempType === 'celsius') {
@@ -50,9 +51,10 @@ export const getWindSPD = (language: string): string => {
   }
 };
 
-export const getWeatherInfo = (type: 'feels' | 'wind' | 'rh') => (
-  language: 'en' | 'ru' | 'pl'
-): string => weatherInfo[type][language];
+export const getWeatherInfo =
+  (type: 'feels' | 'wind' | 'rh') =>
+  (language: 'en' | 'ru' | 'pl'): string =>
+    weatherInfo[type][language];
 
 export const getLocal = (language: string): string => {
   switch (language) {
@@ -91,9 +93,10 @@ export const get3DaysWeekName = (
   ];
 };
 
-export const getWetherDescrByCode = (code: number) => (
-  language: 'en' | 'ru' | 'pl'
-): string => WeatherAPICodes[code || 900][language];
+export const getWetherDescrByCode =
+  (code: number) =>
+  (language: 'en' | 'ru' | 'pl'): string =>
+    WeatherAPICodes[code || 900][language];
 
 export const WeatherAPICodesIcon: Record<number, string> = {
   200: 'thunder',

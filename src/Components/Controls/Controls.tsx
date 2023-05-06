@@ -15,7 +15,7 @@ import {
 } from '@material-ui/core';
 import { connect, ConnectedProps } from 'react-redux';
 import { State } from 'src/Reducers/rootReducer';
-import style from './controls.module.css';
+import * as style from './controls.module.css';
 import { Wrapper } from '../Wrapper';
 import { updateLocation } from '../Location/LocationActions';
 import {

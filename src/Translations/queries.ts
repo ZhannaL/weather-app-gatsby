@@ -74,6 +74,7 @@ export const getWeather = (
   country: string
 ): Promise<GetWeather> => {
   const url = `https://api.weatherbit.io/v2.0/forecast/daily?city=${city}&country=${country}&days=4&key=${process.env.GATSBY_KEY_WEATHER_API}`;
+
   return fetch(url)
     .then((res) => res.json())
     .then((res) => res);

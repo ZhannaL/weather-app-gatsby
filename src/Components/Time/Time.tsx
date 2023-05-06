@@ -3,7 +3,7 @@ import { Typography } from '@material-ui/core';
 import { connect, ConnectedProps } from 'react-redux';
 import { getLocal } from 'src/Translations/helpers';
 import { State } from 'src/Reducers/rootReducer';
-import style from './time.module.css';
+import  * as style from './time.module.css';
 import { Wrapper } from '../Wrapper';
 
 const mapStateToProps = (state: State) => ({

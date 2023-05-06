@@ -4,7 +4,7 @@ import mapboxgl, { Map as Mapgl } from 'mapbox-gl';
 import { connect, ConnectedProps } from 'react-redux';
 import { getTextlatitudelongitude } from 'src/Translations/helpers';
 import { State } from 'src/Reducers/rootReducer';
-import style from './map.module.css';
+import * as style from './map.module.css';
 import { Wrapper } from '../Wrapper';
 
 const mapStateToProps = (state: State) => ({
@@ -31,10 +31,10 @@ class MapBlock extends React.PureComponent<Props> {
 
   componentDidMount(): void {
     mapboxgl.accessToken =
-      'pk.eyJ1Ijoiemhhbm5hc2JpdG5ldmEiLCJhIjoiY2thc2h6eXRxMGtlcTJ3bzV3N2I4cW5leCJ9.gVomj5-byfWfjNDI8M33fQ';
+      'pk.eyJ1Ijoiemhhbm5hc2JpdG5ldmEiLCJhIjoiY2xoYnpia3drMHduMzNxcWZ6cWdmYXNtNiJ9.2WWs4-TiDRWyHGtczf48Kw';
     this.mapboxgl = new mapboxgl.Map({
       container: 'myMap',
-      style: 'mapbox://styles/mapbox/streets-v11',
+      style: 'mapbox://styles/mapbox/streets-v12',
       center: [0, 0],
       zoom: 6,
       attributionControl: true,

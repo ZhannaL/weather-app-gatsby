@@ -2,7 +2,7 @@ import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import image from 'src/styles/images/land.jpg';
 import { State } from 'src/Reducers/rootReducer';
-import style from './app.module.css';
+import * as style from './app.module.css';
 import { Controls } from './Controls';
 import { Search } from './Search';
 import { Location } from './Location';

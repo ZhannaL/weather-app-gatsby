@@ -7,9 +7,9 @@ import {
   getIconClassNameWeatherByCode,
   get3DaysWeekName,
 } from 'src/Translations/helpers';
-import icons from 'src/styles/icons.module.css';
+import * as icons from 'src/styles/icons.module.css';
 import { State } from 'src/Reducers/rootReducer';
-import style from './weatherForecast.module.css';
+import * as style from './weatherForecast.module.css';
 import { Wrapper } from '../Wrapper';
 
 type ForecastDayProps = Readonly<{
@@ -21,33 +21,35 @@ type ForecastDayProps = Readonly<{
   indDayWeek: number;
 }>;
 
-const ForecastDay = ({
+function ForecastDay({
   day,
   dayCode,
   lang,
   tempType,
   timeZone,
   indDayWeek,
-}: ForecastDayProps) => (
-  <div className={style.day}>
-    <Typography color="inherit" variant="h4" className={style.weekDay}>
-      {get3DaysWeekName(lang, timeZone)[indDayWeek]}
-    </Typography>
-    <img
-      alt="weather icon day"
-      src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-      className={classnames(
-        icons[getIconClassNameWeatherByCode(dayCode)],
-        style.icon
-      )}
-    />
+}: ForecastDayProps) {
+  return (
+    <div className={style.day}>
+      <Typography color="inherit" variant="h4" className={style.weekDay}>
+        {get3DaysWeekName(lang, timeZone)[indDayWeek]}
+      </Typography>
+      <img
+        alt="weather icon day"
+        src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+        className={classnames(
+          icons[getIconClassNameWeatherByCode(dayCode)],
+          style.icon
+        )}
+      />
 
-    <Typography color="inherit" variant="h4" className={style.temp}>
-      {getTepmByType(day, tempType)}
-      {tempType === 'celsius' ? '°C' : '°F'}
-    </Typography>
-  </div>
-);
+      <Typography color="inherit" variant="h4" className={style.temp}>
+        {getTepmByType(day, tempType)}
+        {tempType === 'celsius' ? '°C' : '°F'}
+      </Typography>
+    </div>
+  );
+}
 
 const mapStateToProps = (state: State) => ({
   city: state.location.city,

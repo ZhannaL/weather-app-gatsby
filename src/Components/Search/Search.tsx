@@ -13,7 +13,7 @@ import MyLocationIcon from '@material-ui/icons/MyLocation';
 import { connect, ConnectedProps } from 'react-redux';
 import { State } from 'src/Reducers/rootReducer';
 import { updateLocation, getCityEngName } from '../Location/LocationActions';
-import style from './search.module.css';
+import * as style from './search.module.css';
 import { Wrapper } from '../Wrapper';
 
 const mapStateToProps = (state: State) => ({
@@ -49,12 +49,8 @@ class Search extends React.PureComponent<Props, CompState> {
 
   render(): JSX.Element {
     const { currentSearch } = this.state;
-    const {
-      updateCurrentLocation,
-      updateCityEngName,
-      lang,
-      isWrong,
-    } = this.props;
+    const { updateCurrentLocation, updateCityEngName, lang, isWrong } =
+      this.props;
     return (
       <Wrapper className={style.search}>
         <FormControl fullWidth variant="filled">

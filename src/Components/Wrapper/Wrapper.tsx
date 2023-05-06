@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 import classnames from 'classnames';
-import style from './wrapper.module.css';
+import * as style from './wrapper.module.css';
 
 type Props = {
   children: ReactNode;

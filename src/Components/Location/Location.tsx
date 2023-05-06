@@ -3,7 +3,7 @@ import { Typography } from '@material-ui/core';
 import { connect, ConnectedProps } from 'react-redux';
 import { State } from 'src/Reducers/rootReducer';
 import { updateLocation, getCityEngName } from './LocationActions';
-import style from './location.module.css';
+import  * as style from './location.module.css';
 import { Wrapper } from '../Wrapper';
 
 const mapStateToProps = (state: State) => ({
